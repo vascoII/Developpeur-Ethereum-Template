@@ -3,24 +3,20 @@ pragma solidity 0.8.23;
 
 contract Whitelist {
     mapping (address => bool) whitelistMapping;
-    mapping (address => address[]) authorizedBy;
     event Authorized(address _address);
 
-    function authorizeSelf() public {
-        require(!check(msg.sender), "Already authorized");
+    constructor() {
         whitelistMapping[msg.sender] = true;
-        emit Authorized(msg.sender);
     }
 
-    function authorizeOther(address _address) public {
-        require(!check(_address), "Already authorized");
+    modifier check(){
+	    require(whitelistMapping[msg.sender], "Not authorized to add address to whitelist");
+	    _;
+    }
+
+    function authorize(address _address) public check() {
         whitelistMapping[_address] = true;
-        authorizedBy[msg.sender].push(_address);
         emit Authorized(_address);
-    }
-
-    function check(address _address) private view returns (bool) {
-        return whitelistMapping[_address];
     }
 
 }
