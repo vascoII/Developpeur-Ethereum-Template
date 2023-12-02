@@ -10,7 +10,7 @@ contract Bank {
     mapping(address => uint256) public customerBalances;
 
     modifier checkBalance(address from, uint256 amount) {
-	    require(customerBalances[from] >= amount, "Not authorized to add address to whitelist");
+	    require(customerBalances[from] >= amount, "Insufficient balance for transaction");
 	    _;
     }
 
