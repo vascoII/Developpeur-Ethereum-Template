@@ -30,7 +30,7 @@ contract RandomNumberLinkOracle is VRFConsumerBase {
     /**
      * Callback function utilisée par VRF Coordinator
      */
-    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+    function fulfillRandomness(bytes32, uint256 randomness) internal override {
         randomResult = randomness;
     }
 }
